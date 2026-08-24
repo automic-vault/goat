@@ -1,3 +1,23 @@
+# Automic Vault Fork Notes
+
+This repository is the Automic Vault fork of goat.
+
+Automic Vault is a macOS-first system that keeps developer credentials in
+custody and applies them only after policy or the user allows the complete
+operation requested by verified software.
+
+The [goat Isotope work](https://github.com/automic-vault/automic-vault/pull/189)
+routes auth-session reads, login and refresh stores, and logout deletes through
+Automic Vault's authenticated XPC service while retaining only DID/PDS metadata
+and markers on disk. Automic Vault's reviewed release workflow builds and signs
+the pinned executable with Hardened Runtime; the Hardener verifies its release
+digest and Automic Vault signature before installation.
+
+This source fork alone does not establish Hardened State. The remainder of this
+README is the original upstream goat README.
+
+---
+
 `goat`: Go AT protocol CLI tool
 ===============================
 
