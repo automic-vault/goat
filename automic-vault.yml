@@ -1,0 +1,29 @@
+name:
+  isotope:goat
+
+replaces:
+  brew:goat
+
+build: |
+  GOTOOLCHAIN=go1.25.1 CGO_ENABLED=0 go test -mod=readonly ./...
+  mkdir -p bin
+  GOTOOLCHAIN=go1.25.1 CGO_ENABLED=0 go build \
+    -mod=readonly -trimpath -buildvcs=true \
+    -ldflags "-s -w -X main.Version=v${VERSION}" \
+    -o bin/goat .
+  codesign --force --options runtime --timestamp \
+    --identifier goat \
+    --sign "$CODESIGN_IDENTITY" \
+    bin/goat
+  tar czf out.tgz bin/goat
+
+justification:
+  title:
+    Unprotected Credential Access
+  detail: |
+    Upstream goat stores app passwords and authentication tokens in plaintext
+    on disk.
+
+    This isotope routes session reads, login and refresh stores, and logout
+    deletes through Automic Vault's authenticated XPC service while retaining
+    only DID/PDS metadata and markers on disk. Plaintext sessions fail closed.
