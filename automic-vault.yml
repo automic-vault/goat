@@ -5,9 +5,9 @@ replaces:
   brew:goat
 
 build: |
-  GOTOOLCHAIN=go1.26.1 CGO_ENABLED=0 go test -mod=readonly ./...
+  GOTOOLCHAIN=go1.27.1 CGO_ENABLED=0 go test -mod=readonly ./...
   mkdir -p bin
-  GOTOOLCHAIN=go1.26.1 CGO_ENABLED=0 go build \
+  GOTOOLCHAIN=go1.27.1 CGO_ENABLED=0 go build \
     -mod=readonly -trimpath -buildvcs=true \
     -ldflags "-s -w -X main.version=v${VERSION}" \
     -o bin/goat .
